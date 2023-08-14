@@ -54,6 +54,7 @@ xlabel('t')
 ylabel('y4')
 hold off
 
+
 %Question 3:
 A=load('ECG_Data.txt');
 subplot(1,1,1)
@@ -80,6 +81,7 @@ std(jan)
 [s,Fs] = audioread('Track001.wav');
 sound(s,Fs);
 
+
 %Question 4:
 [s,Fs] = audioread('speech.wav');
 sound(s,Fs);
@@ -96,15 +98,25 @@ subplot(1,2,2)
 plot(y)
 xlabel('samples')
 ylabel('y')
+
 Fourier = fft(y);
-subplot(1,1,1)
-plot(Fourier)
-xlabel('Freq')
-ylabel('y')
+T = 1/Fs;                  
+L = 19120;            
+t = (0:L-1)*T; 
+P2 = abs(Fourier/L);
+P1 = P2(1:L/2+1);
+P1(2:end-1) = 2*P1(2:end-1);
+f = Fs*(0:(L/2))/L;
+plot(f,P1) 
+title(" Amplitude Spectrum of S(t)")
+xlabel("f (Hz)")
+ylabel("|P1(f)|")
+
+
 
 %Question 5:
 t =[0:0.001:5];
-fs = 5000;
+fs = 1000;
 y1 = sin(2*pi*200*a*t);
 y2 = sin(2*pi*220*a*t);
 k = [y1 y2];
@@ -114,6 +126,7 @@ sound(s, Fs)
 plot(s)
 xlabel('samples')
 ylabel('s')
+
 
 %Question 6:
 t = linspace(0,5,20000);
@@ -144,6 +157,7 @@ audiowrite('sg1.wav', z, fs);
 
 [s,Fs] = audioread('sg1.wav');
 sound(s, Fs)
+
 
 %Question 7:
 con = load('ConvFile1.txt')
