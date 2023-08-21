@@ -1,7 +1,7 @@
 %Question 1:
 %Part 1:
 a = 1 + mod(30,3);
-t = linspace(0,a,30);
+t = [0:0.001:1/a];
 x1 = inline("a*cos(2*pi*5*a*t)",'a','t');
 x2 = inline("(a/2)*cos(2*pi*6*a*t)",'a','t');
 x3 = inline("(a/4)*cos(2*pi*10*a*t)",'a','t');
@@ -11,6 +11,7 @@ plot(t,x2(a,t),'b')
 plot(t,x3(a,t),'r')
 ylabel('Signal');
 xlabel('t(sec)');
+legend('x1','x2','x3')
 hold off
 
 
@@ -64,7 +65,7 @@ subplot(3,1,1)
 plot(t,s,'b')
 ylabel('Signal');
 xlabel('t(sec)');
-title('Linear interpolation')
+title('Linear interpolation','12')
 
 %b
 Fs = 20*a;
@@ -90,15 +91,14 @@ xlabel('t(sec)');
 %a
 fs = 14*a;
 T = 1/fs;
-t =[0:T:a];
+t =[0:T:a-T];
 s = x1(a,t)+x2(a,t)+x3(a,t);
-N=2^16;
+N=length(s);
 y=fft(s,N); 
 z=fftshift(y); 
 f_vec=[0:1:N-1]*fs/N-fs/2; 
 amplitude_spectra=abs(z)/fs; 
-amplitude_spectra=abs(z)*T;
-figure;plot(f_vec,abs(amplitude_spectra).^2);
+figure;stem(f_vec,abs(amplitude_spectra).^2);
 xlabel('Frequency [Hz]')
 ylabel('Energy/Hz')
 title('Energy density spectrum')
@@ -111,15 +111,14 @@ Eg=sum(s.^2)*T
 %b
 fs = 20*a;
 T = 1/fs;
-t =[0:T:a];
+t =[0:T:a-T];
 s = x1(a,t)+x2(a,t)+x3(a,t);
-N=2^16;
+N=length(s);
 y=fft(s,N); 
 z=fftshift(y); 
 f_vec=[0:1:N-1]*fs/N-fs/2; 
 amplitude_spectra=abs(z)/fs; 
-amplitude_spectra=abs(z)*T;
-figure;plot(f_vec,abs(amplitude_spectra).^2);
+figure;stem(f_vec,abs(amplitude_spectra).^2);
 xlabel('Frequency [Hz]')
 ylabel('Energy/Hz')
 title('Energy density spectrum')
@@ -131,15 +130,14 @@ Eg=sum(s.^2)*T
 %c
 fs = 9*a;
 T = 1/fs;
-t =[0:T:a];
+t =[0:T:a-T];
 s = x1(a,t)+x2(a,t)+x3(a,t);
-N=2^16;
+N=length(s);
 y=fft(s,N); 
 z=fftshift(y); 
 f_vec=[0:1:N-1]*fs/N-fs/2; 
 amplitude_spectra=abs(z)/fs; 
-amplitude_spectra=abs(z)*T;
-figure;plot(f_vec,abs(amplitude_spectra).^2);
+figure;stem(f_vec,abs(amplitude_spectra).^2);
 xlabel('Frequency [Hz]')
 ylabel('Energy/Hz')
 title('Energy density spectrum')
@@ -169,7 +167,7 @@ ylabel('Signal');
 xlabel('t(sec)');
 title('Upsampling')
 
-y1 = upsample(s,3);
+y1 = upsample(z,5);
 subplot(2,1,2)
 plot(y1)
 ylabel('Signal');
