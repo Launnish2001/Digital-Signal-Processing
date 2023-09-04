@@ -28,3 +28,17 @@ for i = 2:10
     figure;
         Amplitude_spectrum(s6(20000*(i-1):20000*i),fs6);
 end
+
+% Temporal variations (2D view)
+spectrogram(s6,20000,19500,20000,10000,'yaxis');
+colormap jet
+colorbar
+
+% Temporal variations (3D view)
+Tp = spectrogram(s6,20000,19500,20000,1000);
+mesh(abs(Tp))
+colormap jet
+colorbar  
+xlabel('Frequency[Hz]')
+ylabel('Time[s]')
+zlabel('Amplitude[db]')
